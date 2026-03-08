@@ -5,29 +5,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.InventoryPage;
+import pages.LoginPage;
 import sharedData.SharedData;
 
 public class AllItemsTest extends SharedData {
     @Test
     public void clickAllItemsPage() {
-
-        driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com/");
-        driver.manage().window().maximize();
-
         // login
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
+        LoginPage loginPage = new LoginPage(getDriver());
+        loginPage.loginProcess("standard_user", "secret_sauce");
 
-        // deschide burger menu
-        driver.findElement(By.id("react-burger-menu-btn")).click();
-
-        // click All Items
-        driver.findElement(By.id("inventory_sidebar_link")).click();
-
-        // validare
-        Assert.assertTrue(driver.getCurrentUrl().contains("inventory"));
+        // navighează la All Items folosind InventoryPage
+        InventoryPage inventoryPage = new InventoryPage(getDriver());
+        inventoryPage.goToAllItems();
 
     }
 }
