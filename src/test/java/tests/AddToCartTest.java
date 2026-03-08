@@ -1,18 +1,22 @@
 package tests;
 
+import models.CustomerModel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.LoginPage;
 import sharedData.SharedData;
+import utils.JsonReader;
 
 public class AddToCartTest extends SharedData {
 
     @Test
     public void addProductToCartSuccessfully() {
+
+        CustomerModel testData = JsonReader.getCustomerData();
         // login
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.loginProcess("standard_user", "secret_sauce");
+        loginPage.loginProcess(testData);
 
         // CartPage
         CartPage cartPage = new CartPage(getDriver());

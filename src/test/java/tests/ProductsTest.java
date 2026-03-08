@@ -1,19 +1,22 @@
 package tests;
 
+import models.CustomerModel;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import sharedData.SharedData;
+import utils.JsonReader;
 
 public class ProductsTest extends SharedData {
 
     @Test
     public void productsPageDisplayed() {
+        CustomerModel testData = JsonReader.getCustomerData();
 
         // login
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.loginProcess("standard_user", "secret_sauce");
+        loginPage.loginProcess(testData);
 
         // verificam titlul "Products"
         String pageTitle = getDriver().findElement(By.className("title")).getText();

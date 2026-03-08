@@ -1,5 +1,6 @@
 package pages;
 
+import models.CustomerModel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,9 +23,9 @@ public class LoginPage extends BasePage {
     private WebElement loginButton;
 
     // Metodă corectă de login
-    public void loginProcess(String username, String password){
-        userNameField.sendKeys(username);
-        passwordField.sendKeys(password);
+    public void loginProcess(CustomerModel customer){
+        userNameField.sendKeys(customer.getUsername());
+        passwordField.sendKeys(customer.getPassword());
         loginButton.click();
     }
 }
