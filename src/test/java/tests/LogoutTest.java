@@ -8,16 +8,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import sharedData.SharedData;
 
 import java.time.Duration;
 
-public class LogoutTest {
+public class LogoutTest extends SharedData {
 
     @Test
     public void logoutSuccessfully() {
         WebDriver driver = new ChromeDriver();
 
         //deschid pagina
+        driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 

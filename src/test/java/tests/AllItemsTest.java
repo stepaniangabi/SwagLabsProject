@@ -5,11 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import sharedData.SharedData;
 
-public class AllItemsTest {
+public class AllItemsTest extends SharedData {
     @Test
     public void clickAllItemsPage() {
-        WebDriver driver = new ChromeDriver();
+
+        driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 

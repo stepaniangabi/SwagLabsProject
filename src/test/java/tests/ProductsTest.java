@@ -6,10 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import sharedData.SharedData;
 
-public class ProductsTest {
+public class ProductsTest extends SharedData {
     @Test
     public void productsPageDisplayed(){
+        driver = new ChromeDriver();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
 

@@ -5,8 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import sharedData.SharedData;
 
-public class AddToCartTest {
+public class AddToCartTest extends SharedData {
 
     @Test
     public void addProductToCartSuccessfully(){
@@ -14,6 +16,7 @@ public class AddToCartTest {
         WebDriver driver = new ChromeDriver();
 
         // deschid site-ul
+        driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
