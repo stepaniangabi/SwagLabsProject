@@ -31,12 +31,11 @@ public class LogoutPage extends BasePage {
     // Metodă pentru a deschide meniul
     public void openMenu() {
         menuButton.click();
+        wait.until(ExpectedConditions.visibilityOf(logoutLink));
     }
 
     // Metodă pentru logout
     public void clickLogout() {
-        // Așteaptă până link-ul e clickabil
-        wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
         logoutLink.click();
     }
 
