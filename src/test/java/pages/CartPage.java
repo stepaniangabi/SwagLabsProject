@@ -19,17 +19,37 @@ public class CartPage extends BasePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // Adaugă produs în coș după ID-ul butonului
+    // metoda originala pentru a adauga produs in cos dupa id
     public void addProductToCart(String productId) {
         WebElement addButton = driver.findElement(By.id(productId));
         wait.until(ExpectedConditions.elementToBeClickable(addButton));
         addButton.click();
     }
 
-    // Obține numărul de produse din coș
+    // returneaza textul badge-ului din cos
     public String getCartBadgeText() {
         WebElement cartBadge = driver.findElement(By.className("shopping_cart_badge"));
         wait.until(ExpectedConditions.visibilityOf(cartBadge));
         return cartBadge.getText();
+    }
+
+    // verifica daca exista produse in cos
+    public boolean isProductInCart() {
+        try {
+            WebElement cartBadge = driver.findElement(By.className("shopping_cart_badge"));
+            return cartBadge.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // returneaza numarul de produse din cos
+    public int getNumberOfProductsInCart() {
+        try {
+            WebElement cartBadge = driver.findElement(By.className("shopping_cart_badge"));
+            return Integer.parseInt(cartBadge.getText());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
