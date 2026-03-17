@@ -6,14 +6,12 @@ import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
-import pages.ResetAppStatePage;
 import sharedData.SharedData;
 import utils.JsonReader;
 
-public class ResetAppStateTest extends SharedData {
-
+public class RemoveProductFromCartTest extends SharedData {
     @Test
-    public void resetAppStateClearsCart() {
+    public void removeProductFromCart() {
         // Citește datele clientului
         CustomerModel testData = JsonReader.getCustomerData();
 
@@ -21,22 +19,18 @@ public class ResetAppStateTest extends SharedData {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.loginProcess(testData);
 
-        // Adaugă un produs în coș
+        // Adaugă produs în coș
         ProductsPage productsPage = new ProductsPage(getDriver());
         productsPage.addProductToCartByIndex(0); // primul produs
 
         // Verifică că produsul a fost adăugat
         CartPage cartPage = new CartPage(getDriver());
-        Assert.assertTrue(cartPage.isProductInCart(), "Produsul nu a fost adaugat in cart!");
+        Assert.assertTrue(cartPage.isProductInCart(), "Produsul nu a fost adăugat în coș!");
 
-        // Deschide burger menu și dă reset
-        ResetAppStatePage resetPage = new ResetAppStatePage(getDriver());
-        resetPage.clickResetAppState();
+        // Șterge produsul din coș
+        cartPage.removeProductFromCartByIndex(0);
 
-        // Așteaptă ca coșul să fie gol folosind metoda din CartPage
-        cartPage.waitForCartToBeEmptyAfterReset();
-
-        // Verifică că coșul a fost resetat
-        Assert.assertEquals(cartPage.getNumberOfProductsInCart(), 0, "Cosul nu a fost resetat!");
+        // Verifică că coșul e gol
+        Assert.assertEquals(cartPage.getNumberOfProductsInCart(), 0, "Coșul nu a fost gol după ștergere!");
     }
 }

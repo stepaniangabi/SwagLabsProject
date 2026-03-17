@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,38 +16,44 @@ public class LogoutPage extends BasePage {
 
     public LogoutPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    // Butonul burger menu
     @FindBy(id = "react-burger-menu-btn")
     private WebElement menuButton;
 
+    // Link-ul de logout
     @FindBy(id = "logout_sidebar_link")
     private WebElement logoutLink;
 
-    @FindBy(id = "login-button")
-    private WebElement loginButton;
-
-    // Metodă pentru a deschide meniul
+    // Deschide meniul lateral
     public void openMenu() {
         menuButton.click();
         wait.until(ExpectedConditions.visibilityOf(logoutLink));
     }
 
-    // Metodă pentru logout
+    // Click pe logout
     public void clickLogout() {
         logoutLink.click();
     }
 
+    // Proces complet de logout
     public void logoutProcess() {
         openMenu();
         clickLogout();
     }
 
-    // Verificare dacă suntem pe pagina de login
+    // Verificare dacă suntem pe pagina de login după logout
     public boolean isLoginPageDisplayed() {
-        wait.until(ExpectedConditions.visibilityOf(loginButton));
-        return loginButton.isDisplayed();
+        try {
+            // Folosim By pentru a căuta elementul după ce pagina s-a încărcat
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")))
+                    .isDisplayed();
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return false;
+        }
     }
 }
