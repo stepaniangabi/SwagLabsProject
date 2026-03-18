@@ -46,14 +46,8 @@ public class LogoutPage extends BasePage {
     }
 
     // Verificare dacă suntem pe pagina de login după logout
-    public boolean isLoginPageDisplayed() {
-        try {
-            // Folosim By pentru a căuta elementul după ce pagina s-a încărcat
-            return new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")))
-                    .isDisplayed();
-        } catch (org.openqa.selenium.TimeoutException e) {
-            return false;
-        }
+    public void isLoginPageDisplayed() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
     }
 }

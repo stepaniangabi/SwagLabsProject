@@ -23,6 +23,6 @@ public class LogoutTest extends SharedData {
         logoutPage.logoutProcess();
 
         // validare
-        Assert.assertTrue(logoutPage.isLoginPageDisplayed());
+        logoutPage.isLoginPageDisplayed();
     }
 }
