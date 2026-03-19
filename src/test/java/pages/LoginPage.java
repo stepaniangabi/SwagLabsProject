@@ -1,8 +1,7 @@
 package pages;
 
 import models.CustomerModel;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,7 +11,7 @@ import java.time.Duration;
 
 public class LoginPage extends BasePage {
 
-    private WebDriverWait wait; // ✅ trebuie să fie declarat aici
+    private WebDriverWait wait;
 
     @FindBy(id = "user-name")
     private WebElement usernameField;
@@ -30,7 +29,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // ✅ inițializare aici
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     // Metodă de login
@@ -38,11 +37,24 @@ public class LoginPage extends BasePage {
         usernameField.sendKeys(customer.getUsername());
         passwordField.sendKeys(customer.getPassword());
         loginButton.click();
+
+        // tratează alerta dacă apare
+        acceptAlertIfPresent();
+    }
+
+    // Metodă pentru alerta care poate apărea uneori
+    public void acceptAlertIfPresent() {
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+            // alerta nu a apărut,  continuăm testul
+        }
     }
 
     // Metodă pentru a obține mesajul de eroare
     public String getErrorMessage() {
-        wait.until(ExpectedConditions.visibilityOf(errorMessage)); // ✅ folosește wait
+        wait.until(ExpectedConditions.visibilityOf(errorMessage));
         return errorMessage.getText();
     }
 }

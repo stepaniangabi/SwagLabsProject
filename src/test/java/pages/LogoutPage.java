@@ -30,12 +30,14 @@ public class LogoutPage extends BasePage {
 
     // Deschide meniul lateral
     public void openMenu() {
+        wait.until(ExpectedConditions.elementToBeClickable(menuButton));
         menuButton.click();
-        wait.until(ExpectedConditions.visibilityOf(logoutLink));
+        wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
     }
 
     // Click pe logout
     public void clickLogout() {
+        wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
         logoutLink.click();
     }
 
@@ -43,11 +45,12 @@ public class LogoutPage extends BasePage {
     public void logoutProcess() {
         openMenu();
         clickLogout();
+        // așteaptă pagina de login
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
     }
 
     // Verificare dacă suntem pe pagina de login după logout
-    public void isLoginPageDisplayed() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
+    public boolean isLoginPageDisplayed() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button"))).isDisplayed();
     }
 }
