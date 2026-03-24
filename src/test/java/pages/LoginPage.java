@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.LogUtility;
 
 import java.time.Duration;
 
@@ -34,8 +35,14 @@ public class LoginPage extends BasePage {
 
     // Metodă de login
     public void loginProcess(CustomerModel customer) {
+
+        LogUtility.infoLog("Enter username");
         usernameField.sendKeys(customer.getUsername());
+
+        LogUtility.infoLog("Enter password");
         passwordField.sendKeys(customer.getPassword());
+
+        LogUtility.infoLog("Click login button");
         loginButton.click();
 
         // tratează alerta dacă apare
@@ -47,14 +54,18 @@ public class LoginPage extends BasePage {
         try {
             Alert alert = driver.switchTo().alert();
             alert.accept();
+            LogUtility.infoLog("Alert accepted");
         } catch (NoAlertPresentException e) {
-            // alerta nu a apărut,  continuăm testul
+            LogUtility.infoLog("No alert present");
         }
     }
 
     // Metodă pentru a obține mesajul de eroare
     public String getErrorMessage() {
+
+        LogUtility.infoLog("Waiting for error message");
         wait.until(ExpectedConditions.visibilityOf(errorMessage));
+        LogUtility.infoLog("Error message displayed");
         return errorMessage.getText();
     }
 }

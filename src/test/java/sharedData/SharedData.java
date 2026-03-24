@@ -5,7 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import utils.LogUtility;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class SharedData {
     private WebDriver driver;
 
     @BeforeMethod
-    public void prepareEnvironment(){
+    public void prepareEnvironment(Method method){
         ChromeOptions options = new ChromeOptions();
 
         Map<String, Object> prefs = new HashMap<>();
@@ -27,12 +29,16 @@ public class SharedData {
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
+        // Folosim numele metodei curente pentru log
+        LogUtility.startTest(method.getName());
     }
 
-
     @AfterMethod
-    public void clearEnvironment(){
+    public void clearEnvironment(Method method){
         driver.quit();
+
+        // Folosim numele metodei curente pentru log
+        LogUtility.finishTest(method.getName());
     }
 
     public WebDriver getDriver() {

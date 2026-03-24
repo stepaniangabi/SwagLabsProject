@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.LogUtility;
 
 import java.time.Duration;
 
@@ -32,6 +33,7 @@ public class LogoutPage extends BasePage {
     public void openMenu() {
         wait.until(ExpectedConditions.elementToBeClickable(menuButton));
         menuButton.click();
+        LogUtility.infoLog("Burger menu opened");
         wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
     }
 
@@ -39,18 +41,23 @@ public class LogoutPage extends BasePage {
     public void clickLogout() {
         wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
         logoutLink.click();
+        LogUtility.infoLog("Burger menu opened");
     }
 
     // Proces complet de logout
     public void logoutProcess() {
+        LogUtility.infoLog("Starting logout process");
         openMenu();
         clickLogout();
         // așteaptă pagina de login
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
+        LogUtility.infoLog("Starting logout process");
     }
 
     // Verificare dacă suntem pe pagina de login după logout
     public boolean isLoginPageDisplayed() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button"))).isDisplayed();
+        boolean displayed = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button"))).isDisplayed();
+        LogUtility.infoLog("Checked if login page is displayed: " + displayed);
+        return displayed;
     }
 }
