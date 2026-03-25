@@ -16,28 +16,37 @@ public class SharedData {
 
     @BeforeMethod
     public void prepareEnvironment(Method method){
+
         ChromeOptions options = new ChromeOptions();
 
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("credentials_enable_service", false);                 // disable Save passwords
-        prefs.put("profile.password_manager_enabled", false);           // disable password manager
-        prefs.put("profile.password_manager_leak_detection", false);    // disable breach warning
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("profile.password_manager_leak_detection", false);
 
         options.setExperimentalOption("prefs", prefs);
 
+        // ✅ HEADLESS DOAR IN PIPELINE
+        String ci = System.getenv("CI");
+
+        if (ci != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+        }
+
         driver = new ChromeDriver(options);
+
         driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
-        // Folosim numele metodei curente pentru log
         LogUtility.startTest(method.getName());
     }
 
     @AfterMethod
     public void clearEnvironment(Method method){
         driver.quit();
-
-        // Folosim numele metodei curente pentru log
         LogUtility.finishTest(method.getName());
     }
 
